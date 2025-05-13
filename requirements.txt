@@ -1,0 +1,7 @@
+Django
+grpcio
+grpcio-tools
+protobuf
+PyJWT
+SQLAlchemy
+psycopg2-binary

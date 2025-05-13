@@ -1,6 +1,7 @@
+
 # 💬 gRPC Microservices Auth & User System with Django API Gateway
 
-This project demonstrates a microservices-based architecture using **gRPC for internal service communication** and **Django REST Framework** as an external API gateway. The architecture is modular and scalable, designed for production-grade systems like chat apps, eCommerce backends, or SaaS platforms.
+This project demonstrates a microservices-based architecture using **gRPC for internal service communication** and **Django** as an external API gateway. The architecture is modular and scalable, designed for production-grade systems like chat apps, eCommerce backends, or SaaS platforms.
 
 ---
 
@@ -17,9 +18,9 @@ This project demonstrates a microservices-based architecture using **gRPC for in
 
 ## ⚙️ Tech Stack
 
-- **Django** – API Gateway using DRF
+- **Django** – API Gateway
 - **gRPC** – Fast, contract-based microservice communication
-- **SQLite** – Demo database (can switch to PostgreSQL/MySQL)
+- **PostgreSQL** – Main production database
 - **Python** – Main language for all services
 - **Protobuf** – Interface definition
 - **HTTP (REST)** – External communication with the API Gateway
@@ -48,7 +49,44 @@ pip install -r requirements.txt
 
 ---
 
-### 3. Compile Proto Files
+### 3. Configure PostgreSQL
+
+Make sure PostgreSQL is installed and running:
+
+```bash
+# Ubuntu
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+# macOS (Homebrew)
+brew install postgresql
+brew services start postgresql
+```
+
+Update your `django_gateway/settings.py` with:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': 'your_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+```
+
+Then run:
+
+```bash
+python manage.py migrate
+```
+
+---
+
+### 4. Compile Proto Files
 
 ```bash
 python -m grpc_tools.protoc -I=protos --python_out=generated --grpc_python_out=generated protos/auth.proto
@@ -57,7 +95,7 @@ python -m grpc_tools.protoc -I=protos --python_out=generated --grpc_python_out=g
 
 ---
 
-### 4. Run gRPC Services (In Separate Terminals)
+### 5. Run gRPC Services (In Separate Terminals)
 
 **Auth Service**
 
@@ -73,7 +111,7 @@ python user_service/server.py
 
 ---
 
-### 5. Run Django Gateway (ASGI/WSGI)
+### 6. Run Django Gateway
 
 ```bash
 python manage.py runserver
@@ -81,7 +119,7 @@ python manage.py runserver
 
 ---
 
-## 🔑 API Endpoints (via Django REST)
+## 🔑 API Endpoints
 
 | Method | Endpoint        | Description                     |
 |--------|------------------|---------------------------------|
@@ -187,7 +225,6 @@ grpc_demo/
 │   ├── auth.proto
 │   ├── user.proto
 ├── manage.py
-├── db.sqlite3
 ├── requirements.txt
 ```
 
@@ -200,7 +237,7 @@ grpc_demo/
 - 🔄 Add gRPC NotificationService
 - 🔄 Add gRPC ChatService
 - 🔄 Docker + Docker Compose setup
-- 🔄 Add OpenAPI/Swagger docs for gateway
+- 🔄 Add Swagger-like interface for proto contracts
 
 ---
 
