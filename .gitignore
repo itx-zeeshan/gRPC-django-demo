@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+media/
+
+# Virtual Environments
+env/
+venv/
+ENV/
+.venv/
+
+# Django
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+*.pot
+
+# VSCode / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Pycharm
+*.iml
+*.ipr
+*.iws
+
+# dotenv
+.env
+
+# generated files
+generated/
